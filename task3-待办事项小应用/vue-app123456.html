@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vue-test</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    {{ message1 }}
+  </div>
+  
+  <div id="app-2">
+    <span v-bind:title="message">
+      鼠标悬停几秒钟查看此处动态绑定的提示信息！
+    </span>
+  </div>
+
+  <div id="app-3">
+    <p v-if="seen">现在你看到我了</p>
+  </div>
+
+  <div id="app-4">
+    <ol>
+      <li v-for="todo in todos">
+        {{ todo.number }}
+      </li>
+    </ol>
+  </div>
+
+  <div id="app-5">
+    <p>{{ message }}</p>
+    <button v-on:click="reverseMessage">逆转消息</button>
+  </div>
+
+  <div id="app-6">
+    <p>{{ message }}</p>
+    <input v-model="message">
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message1: 'wang peng'
+      }
+    })
+    
+    var app2 = new Vue({
+      el: '#app-2',
+      data: {
+        message: '页面加载于 ' + new Date().toLocaleString()
+      }
+    })
+
+    var app3 = new Vue({
+      el: '#app-3',
+      data: {
+        seen: false
+      }
+    })
+
+    var app4 = new Vue({
+      el: '#app-4',
+      data: {
+        todos: [
+          {number: 1},
+          {number: 2},
+          {number: 3}
+        ]
+      }
+    })
+
+    var app5 = new Vue({
+      el: '#app-5',
+      data: {
+        message: 'Hello Vue.js!'
+      },
+      methods: {
+        reverseMessage: function () {
+          console.log(this) //app5对象
+          this.message = this.message.split('').reverse().join('')
+        }
+      }
+    })
+
+    var app6 = new Vue({
+      el: '#app-6',
+      data: {
+        message:''
+      }
+    })
+  </script>
+</body>
+</html>
