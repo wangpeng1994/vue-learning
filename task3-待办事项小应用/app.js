@@ -1,13 +1,21 @@
-import bar from './bar';
 import Vue from 'vue'
 
-bar()
-
 var app = new Vue({
-  el: '#xxx',
+  el: '#app',
   data: {
-    message: 'Hello World！'
+    newTodo: '',
+    todoList: []
+  },
+  methods: {
+    addTodo: function(){
+      this.todoList.push({
+        title: this.newTodo,
+        createAt: new Date().toLocaleString()
+      })
+      console.log(this.todoList)
+      this.newTodo = ''  //之后 input 的值应该清空
+    }
   }
 })
 
-// app.message = '修改了message'
+

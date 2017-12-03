@@ -287,44 +287,32 @@ module.exports = g;
 "use strict";
 
 
-var _bar = __webpack_require__(3);
-
-var _bar2 = _interopRequireDefault(_bar);
-
-var _vue = __webpack_require__(4);
+var _vue = __webpack_require__(3);
 
 var _vue2 = _interopRequireDefault(_vue);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _bar2.default)();
-
 var app = new _vue2.default({
-  el: '#xxx',
+  el: '#app',
   data: {
-    message: 'Hello World！'
+    newTodo: '',
+    todoList: []
+  },
+  methods: {
+    addTodo: function addTodo() {
+      this.todoList.push({
+        title: this.newTodo,
+        createAt: new Date().toLocaleString()
+      });
+      console.log(this.todoList);
+      this.newTodo = ''; //之后 input 的值应该清空
+    }
   }
 });
 
-// app.message = '修改了message'
-
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = bar;
-function bar() {
-  console.log('我是 bar 函数');
-}
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11048,10 +11036,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(1), __webpack_require__(5).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0), __webpack_require__(1), __webpack_require__(4).setImmediate))
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -11104,13 +11092,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(6);
+__webpack_require__(5);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {

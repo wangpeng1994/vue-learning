@@ -3,10 +3,25 @@
     <meta charset="utf-8">
   </head>
   <body>
-    <div id="xxx">
-      {{ message }}
+    <div id="app">
+      <div class="newTask">
+        <input type="text" v-model="newTodo" @keypress.enter="addTodo">
+      </div>
+      <ol class="todos">
+        <li v-for="todo in todoList">
+          {{ todo.title }}
+          {{ todo.createAt }}
+        </li>
+      </ol>
     </div>
 
     <script src="bundle.js"></script>
   </body>
 </html>
+
+<!-- 
+  charset 要加上，不然出现中文就乱码了
+  加一个 div#app，用于给 Vue 初始化
+  div.newTask > input 用于让用户输入待办的内容
+  ol.todos 用于容纳所有待办，每个待办就是一个 <li> 
+-->

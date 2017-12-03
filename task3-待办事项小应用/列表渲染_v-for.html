@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>v-for</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <!-- 用 v-for 把一个数组对应为一组元素 -->
+  <ul id="example-1">
+    <li v-for="(food, index) of foodList">
+      {{ parentMsg }}--{{ food.name }}--{{ index }}
+    </li>
+  </ul>
+
+  <!-- 一个对象的 v-for -->
+  <ul id="v-for-object">
+    <li v-for="(value, key, index) in obj" v-bind:key="value.id">
+      {{ index }}. {{ key }}: {{ value }}
+    </li>
+  </ul>
+
+  <!-- 显示过滤/排序结果 -->
+  <ul id="example-2">
+    <li v-for="n in afterNumbers">{{ n }}</li>
+  </ul>
+
+  <!-- 一段取值范围的 v-for -->
+  <div id="range">
+    <span v-for="n in 20">{{ n }} </span>
+  </div>
+
+  <!-- v-for on a <template> -->
+  <ul id="example-3" v-if="numbers.length"> 
+    <template v-for="n in numbers" v-if="n>5">
+      <p> I'm number: </p>
+      <li>{{ n }}</li>
+    </template>
+  </ul>
+
+
+  <script>
+    var example1 = new Vue({
+      el: '#example-1',
+      data: {
+        parentMsg: 'Parent',
+        foodList: [
+          {name: 'apple'},
+          {name: 'banana'},
+          {name: 'orange'}
+        ]
+      }
+    })
+
+
+    var object = new Vue({
+      el: '#v-for-object',
+      data: {
+        obj: {
+          name: 'wangpeng',
+          hobby: 'girl',
+          gender: 'male'
+        }
+      }
+    })
+  
+    var example2 = new Vue({
+      el: '#example-2',
+      data: {
+        numbers: [0, 1, 2, 4, 5, 6, 7, 8, 9, 10]
+      },
+      computed: {
+        afterNumbers: function(){
+          return this.numbers.filter(function(number){
+            return number % 2 === 0
+          })
+        }
+      }
+    })
+
+    var range = new Vue({
+      el: '#range'
+    })
+
+    var example3 = new Vue({
+      el: '#example-3',
+      data: {
+        isOk: false,
+        numbers: [1,2,3,4,5,6,7,8]
+      }
+    })
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="example-1">
+    <button v-on:click="counter += 1">Add 1</button>
+    <p>The button above has been clicked {{ counter }} times.</p>
+  </div>
+
+  <div id="example-2">
+    <button v-on:click="welcome">welcome</button>
+  </div>
+
+  <div id="example-3">
+    <button @click.right.alt.exact="say('hi')">Say hi</button>
+    <button v-on:click="say('what')">Say what</button>
+  </div>
+
+  <script>
+    var example1 = new Vue({
+      el: '#example-1',
+      data: {
+        counter: 0
+      }
+    })
+  
+    var example2 = new Vue({
+      el: '#example-2',
+      data: {
+        name: 'wang peng'
+      },
+      methods: {
+        welcome(e){
+          alert('Hello ' + this.name + '!')
+          if(e) alert(e.target.tagName)
+        }
+      }
+    })
+
+    var example3 = new Vue({
+      el: '#example-3',
+      methods: {
+        say: function(message){
+          alert(message)
+        }
+      }
+    })
+
+  </script>
+</body>
+</html>
