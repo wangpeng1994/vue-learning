@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 var appTodo = new Vue({
   el: '#app',
   data: {
