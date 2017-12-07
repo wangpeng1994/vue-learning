@@ -1,11 +1,28 @@
+import Vue from 'vue'
+import AV from 'leancloud-storage'
+
+//初始化 leancloud 并经过验证已可以使用AV对象
+var APP_ID = 'g2CCOE2aHd19UjstmukuEHNu-gzGzoHsz'
+var APP_KEY = 'pG1EjwErsEaAomx0lj06XMY7'
+AV.init({
+  appId: APP_ID,
+  appKey: APP_KEY
+})
+
 var appTodo = new Vue({
   el: '#app',
   data: {
+    actionType: 'signUp',
+    formData: {
+      username: '',
+      password: ''
+    },
     newTodo: '',
-    todoList: []
+    todoList: [],
+    currentUser: null
   },
   created: function(){
-    window.onbeforeunload = ()=>{
+    window.onbeforeunload = ()=>{ //改成箭头函数，便于使用this
       let dataString = JSON.stringify(this.todoList)
       window.localStorage.setItem('myTodos', dataString)
 
@@ -20,6 +37,9 @@ var appTodo = new Vue({
     let oldUnCommitedString = window.localStorage.getItem('unCommited')
     let oldUnCommited = JSON.parse(oldUnCommitedString)
     this.newTodo = oldUnCommited || ''
+
+    //一开始就要检查用户是否登录
+    this.currentUser = this.getCurrentUser()
   },
   methods: {
     addTodo: function(){
@@ -38,8 +58,38 @@ var appTodo = new Vue({
       let index = this.todoList.indexOf(todo)
       this.todoList.splice(index, 1)
     },
-    clearAll: function(){
-      this.todoList = []
+    signUp: function(){
+      let user = new AV.User()
+      user.setUsername(this.formData.username)
+      user.setPassword(this.formData.password)
+      user.signUp().then((loginedUser)=>{
+        this.currentUser = this.getCurrentUser()
+        alert('注册成功')
+      }, (error)=>{
+        alert('注册失败')
+      })
+    },
+    login: function(){
+      AV.User.logIn(this.formData.username, this.formData.password).then((loginedUser)=>{
+        this.currentUser = this.getCurrentUser()
+        alert('登录成功')
+      }, (error)=>{
+        alert('登录失败')
+      })
+    },
+    getCurrentUser: function(){
+      let current = AV.User.current()
+      if(current){
+        let {id, createdAt, attributes: {username}} = current
+        return {id, username, createdAt}
+      }else{
+        return null
+      }
+    },
+    logout: function(){
+      AV.User.logOut()
+      this.currentUser = null
+      window.location.reload()
     }
   }
 })
